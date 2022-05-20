@@ -8,12 +8,24 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    /**
+     * /account - Secured
+     * /balance - Secured
+     * /cards - Secured
+     * /contact -Not Secured
+     * /loans - Secured
+     * /notices - Not Secured
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest()
-                .authenticated().and()
+                .antMatchers("/account").authenticated()
+                .antMatchers("/balance").authenticated()
+                .antMatchers("/cards").authenticated()
+                .antMatchers("/loans").authenticated()
+                .antMatchers("/contact").permitAll()
+                .antMatchers("/notices").permitAll()
+                .and()
                 .formLogin().and()
                 .httpBasic();
 
